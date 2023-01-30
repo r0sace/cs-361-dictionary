@@ -18,8 +18,7 @@ class Generator:
         print(
             boxen(
                 "[green]Enter [green]1[/green] to generate a random movie[/green]",
-                "[blue]Enter 2 to enter a filter[blue]",
-                "[purple4]Enter 3 to browse filters[/purple4]",
+                "[blue]Enter 2 to browse or enter a filter[blue]",
                 "[bright_red]Enter 0 to exit[/bright_red]",
                 title="Welcome to the Random Movie Generator!",
                 subtitle="What would you like to do?",
@@ -34,10 +33,8 @@ class Generator:
 
     def welcome_input(self, num):
         if num == "1":
-            pass
+            self.show_movies()
         elif num =="2":
-            pass
-        elif num == "3":
             self.browse_filters()
         elif num == "0":
             print("Goodbye!")
@@ -114,11 +111,11 @@ class Generator:
         elif usr_input == "-s" or usr_input == "--snob":
             self.snob()
         elif usr_input == "-n" or usr_input == "--num":
-            pass
+            self.num()
         elif usr_input == "1":
-            pass
+            self.show_filters()
         elif usr_input == "2":
-            pass
+            self.welcome_message()
         elif usr_input == "0":
             print("Goodbye!")
             exit()
@@ -550,7 +547,164 @@ class Generator:
 
         self.browse_filters()
 
+    def num(self):
+        print("")
+        print(
+            boxen(
+                "[green]Please enter the number of movies to generate",
+                "",
+                "Minimum: 1",
+                "Maximum: 10",
+                "",
+                "[dark_orange3]Enter - to go back",
+                "[bright_red]Enter 0 to exit",
+                title="-n: Number to Generate",
+                color="white",
+                padding=1,
+            )
+        )
 
+        self.user_input = input("Enter here: ")
+        self.num_options(self.user_input)
+    
+    def num_options(self, usr_input):
+        if usr_input == "-" or usr_input.isnumeric() == False:
+            print("Returning back to filters...")
+            self.browse_filters()
+        if 10 >= int(usr_input) and int(usr_input) >= 1:
+            print("\nAre you sure you want to generate " + str(usr_input) + " movies?")
+            confirm = input("Y/N: ")
+            if confirm.lower() == "y":
+                print("\nSuccessfully configured generator to generat " + str(usr_input) + " movies")
+            elif confirm.lower() == "n":
+                print("\nUnsuccessfully configured generator to generate " + str(usr_input) + " movies")
+                print("Generating 1 movie")
+            else:
+                print("\nInvalid entry")
+                print("Returning back to filters...")
+        elif usr_input == "0":
+            print("Goodbye")
+            exit()
+        else:
+            print("\nInvalid number - please enter a number between 1 and 10")
+            self.num()
 
+        self.browse_filters()
+
+    def show_filters(self):
+        print("")
+        print(
+    boxen(
+        "A. 90 minute movies",
+        "B. No horror movies",
+        "C. 1920-1929 decade",
+    
+        "",
+        "[blue]Enter the letter of the filter to remove",
+        "[yellow]Enter 1 to remove all",
+        "",
+        "[dark_orange3]Enter 2 to go back",
+        "[bright_red]Enter 0 to exit",
+        title="[magenta]Current Filters Applied to Generator",
+        color="white",
+        padding=1,
+        )
+        )
+    
+        self.user_input = input("Enter here: ")
+        self.curr_options(self.user_input)
+
+    def curr_options(self, usr_input):
+        if usr_input.lower() == "a":
+            print("Are you sure you want to remove filter A?")
+            confirm = input("Y/N: ")
+            if confirm.lower() == "y":
+                print("\nSuccessfully removed A from current filters")
+                print("Returning to current filters...")
+            elif confirm.lower() == "n":
+                print("\nUnsuccessfully removed A from current filters")
+                print("Returning back to current filters...")
+            else:
+                print("\nInvalid entry - returning to current filters...")
+        elif usr_input == '1':
+            print("Are you sure you want to remove all current filters?")
+            confirm = input("Y/N: ")
+            if confirm.lower() == "y":
+                print("\nSuccessfully removed all current filters")
+                print("Returning back to current filters...")
+            elif confirm.lower() == "n":
+                print("\nUnsuccessfully removed all current filters")
+                print("Returning back to current filters...")
+            else:
+                print("\nInvalid entry - returning to current filters...")
+        elif usr_input == "2":
+            print("Returning back to filters options...")
+            self.browse_filters()
+        elif usr_input == "0":
+            print("\nGoodbye!")
+            exit()
+        else:
+            print("Invalid entry - returning to filters options...")
+            self.browse_filters()
+        
+        self.show_filters()
+
+    def show_movies(self):
+        print("")
+        print(
+    boxen(
+        "A. The Blues Brothers",
+        "B. Evil Dead II",
+        "C. Rosemary's Baby",
+        "D. Burlesque",
+        "",
+         "[blue]Enter the letter of the movie you'd like to see a description of",
+         "",
+        "[green]Enter 1 to generate again",
+        "[dark_orange3]Enter 2 to go back",
+        "[bright_red]Enter 0 to exit",
+        title="Here are your random movies!",
+        color="magenta",
+        padding=1,
+    )
+)
+        self.user_input = input("Enter here: ")
+        self.movies_input(self.user_input)
+
+    def movies_input(self, usr_input):
+        if usr_input.lower() == "A":
+            print(
+                boxen(
+                    "The story is a tale of redemption for paroled convict Jake and his blood",
+                    "brother Elwood, who set out on a 'mission' from God to prevent foreclosure",
+                    "of the Roman Catholic orphanage in which they were raised.",
+                    "",
+                     "[dark_orange3]Press 1 to go back",
+                    "[bright_red]Press 0 to exit",
+                    padding=1,
+                    margin=1,
+                    title="The Blues Brothers",
+                    color="blue"
+                )
+            )
+            option = input("Enter here: ")
+            if option == "1":
+                self.show_movies()
+            elif option =="0":
+                print("\nGoodbye!")
+                exit()
+            else:
+                self.show_movies()
+        elif usr_input == "1":
+            print("\nGenerating new movies...")
+            self.show_movies()
+        elif usr_input == "0":
+            print("\nGoodbye!")
+            exit()
+        elif usr_input == "2":
+            self.welcome_message()
+        else:
+            print("\nInvalid entry - returning home")
+            self.welcome_message()      
 if __name__ == "__main__":
     Generator()
