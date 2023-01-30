@@ -144,34 +144,35 @@ class Generator:
     def gs_options(self, usr_input):
 
         if usr_input == "1":
-            self.show_movies("s")
+            self.show_genres("s")
         elif usr_input.lower() in self.genres:
             print("\nAre you sure you want to generate " + str(usr_input) + " movies? ")
             confirm = input("Y/N: ")
             if confirm.lower() == "y":
                 print("\nSuccessfully added " + str(usr_input) + " movies to filters!")
-                print("Returning back to filters...")
+                print("Returning back to genre filters...")
                 self.filters.append(usr_input)
             elif confirm.lower() == "n":
                 print("\nUnsuccessfully added " + str(usr_input) + " movies to filters")
-                print("Returning back to filters...")
+                print("Returning back to genre filters...")
             else:
                 print("\nInvalid entry")
-                print("Returning back to filters...")
+                print("Returning back to genre filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
+            self.browse_filters()
         elif usr_input == "0":
             print("Goodbye!")
             exit()
         else:
             print("\nInvalid entry - please select from an acceptabl genre")
-            self.show_movies("s")
+            self.show_genres("s")
 
-        self.browse_filters()
+        self.gs()
         
         
 
-    def show_movies(self, o):
+    def show_genres(self, o):
         table = Table(show_header=False, header_style="bold magenta")
         table.add_column
         table.add_column
@@ -240,20 +241,20 @@ class Generator:
     def gd_options(self, usr_input):
 
         if usr_input == "1":
-            self.show_movies("d")
+            self.show_genres("d")
         elif usr_input.lower() in self.genres:
             print("\nAre you sure you want to NOT generate any " + str(usr_input) + " movies? ")
             confirm = input("Y/N: ")
             if confirm.lower() == "y":
                 print("\nSuccessfully removed " + str(usr_input) + " movies from generator!")
-                print("Returning back to filters...")
+                print("Returning back to genre filters...")
                 self.filters.append(usr_input)
             elif confirm.lower() == "n":
                 print("\nUnsuccessfully removed " + str(usr_input) + " movies from generator")
-                print("Returning back to filters...")
+                print("Returning back to genre filters...")
             else:
                 print("\nInvalid entry")
-                print("Returning back to filters...")
+                print("Returning back to genre filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
         elif usr_input == "0":
@@ -261,9 +262,9 @@ class Generator:
             exit()
         else:
             print("\nInvalid entry - please select from an acceptable genre")
-            self.show_movies("d")
+            self.show_genres("d")
 
-        self.browse_filters()
+        self.genre_filters()
 
     def time(self):
         print("")
@@ -704,7 +705,7 @@ class Generator:
         elif usr_input == "2":
             self.welcome_message()
         else:
-            print("\nInvalid entry - returning home")
+            print("Invalid entry - returning home")
             self.welcome_message()      
 if __name__ == "__main__":
     Generator()
