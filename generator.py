@@ -8,6 +8,7 @@ class Generator:
         self.genres = ["action", "adventure","animation","biography","comedy","crime", "documentary", "drama", "family", "fantasy",  "history", "horror", "musical", "mystery", "romance", "sciFi", "sport","thriller", "war", "western"]
         self.times = ["60", "90", "120", "150", "180"]
         self.ratings = ["G", "PG", "PG13", "R", 'NC17']
+        self.decades= ["1900-1909", "1910-1919", "1920-1929", "1930-1939", "1940-1949", "1950-1959", "1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029"]
 
         self.welcome_message()
 
@@ -109,7 +110,7 @@ class Generator:
         elif usr_input == "-r" or usr_input == "--rated":
             self.rated()
         elif usr_input == "-d" or usr_input == "--decade":
-            pass
+            self.decade()
         elif usr_input == "-s" or usr_input == "--snob":
             pass
         elif usr_input == "-n" or usr_input == "--num":
@@ -167,7 +168,7 @@ class Generator:
             print("Goodbye!")
             exit()
         else:
-            print("Invalid entry - please select from an available genre")
+            print("Invalid entry - please select from an acceptabl genre")
             self.show_movies("s")
 
         self.browse_filters()
@@ -264,7 +265,7 @@ class Generator:
             print("Goodbye!")
             exit()
         else:
-            print("Invalid entry - please select from an available genre")
+            print("Invalid entry - please select from an acceptable genre")
             self.show_movies("d")
 
         self.browse_filters()
@@ -309,7 +310,7 @@ class Generator:
             print("Goodbye!")
             exit()
         else:
-            print("Invalid input - please select from an available time")
+            print("Invalid input - please select from an acceptable time")
             self.show_time()
         
         self.browse_filters()
@@ -354,7 +355,7 @@ class Generator:
             boxen(
                 "[green]Enter a movie rating category to NOT generate from ",
                 "",
-                "[blue]Press 1 to see a list of ratings",
+                "[blue]Press 1 to see a list of acceptable ratings",
                 "[dark_orange3]Press 2 to go back",
                 "[bright_red]Press 0 to exit",
                 title="-r: Rated Deselect",
@@ -388,7 +389,7 @@ class Generator:
             print("Goodbye!")
             exit()
         else:
-            print("Invalid entry - please select from an available rating")
+            print("Invalid entry - please select from an acceptable rating")
             self.show_ratings()
 
         self.browse_filters()
@@ -425,7 +426,95 @@ class Generator:
         else:
             print("Invalid entry - returning to rating select...")
             self.rated()
+    
+    def decade(self):
+        print("")
+        print(
+            boxen(
+                "[green]Enter a decade to generate from",
+                "",
+                "[blue]Press 1 to see a list of acceptable decades",
+                "[dark_orange3]Press 2 to go back",
+                "[bright_red]Press 0 to exit",
+                title="-d: Decade Select",
+                color="white",
+                padding=1,
+            )
+        )
+
+        self.user_input = input("Enter here: ")
+        self.decade_options(self.user_input)
+
+    def decade_options(self, usr_input):
+        if usr_input == "1":
+            self.show_decades()
+        elif usr_input in self.decades:
+            print("Are you sure you want to generate movies from " + str(usr_input) + "?")
+            confirm = input("Y/N: ")
+            if confirm.lower() == "y":
+                print("\nSuccessfully added movies from " + str(usr_input) + " to filters!")
+                print("Returning back to filters...")
+            elif confirm.lower() == "n":
+                print("\nUnsuccessfully added movies from " +str(usr_input) + " to filters")
+                print("Returning back to filters...")
+            else:
+                print("\nInvalid entry")
+                print("Returning back to filters...")
+        elif usr_input == "2":
+            print("Returning back to filters...")
+            self.browse_filters()
+        elif usr_input == "0":
+            print("Goodbye!")
+            exit()
+        else:
+            print("Invalid input - please select from an acceptable decade")
+            self.show_decades()
         
+        self.browse_filters()
+        
+    
+    def show_decades(self):
+        table = Table(show_header=False, header_style="bold magenta")
+
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_row(
+            "1900-1909", "1910-1919", "1920-1929", "1930-1939",
+        )
+        table.add_row(
+            "1940-1949", "1950-1959", "1960-1969", "1970-1979",
+        )
+        table.add_row(
+            "1980-1989", "1990-1999", "2000-2009", "2010-2019",
+        )
+        table.add_row(
+            "2020-2029"
+        )
+
+        print("")
+
+        print(
+            boxen(
+                "Decades",
+                "",
+                "[dark_orange3]Enter 1 to go back and enter a decade  [/dark_orange3]",
+                "[bright_red]Enter 0 to exit[/bright_red]",
+                table
+            )
+        )
+
+        self.user_input = input("Enter here: ")
+        if self.user_input == "1":
+            self.decade()
+        elif self.user_input == "0":
+            print("Goodbye!")
+        else:
+            print("Invalid entry - returning to time select...")
+            self.decade()
+
+    
 
 
 if __name__ == "__main__":
