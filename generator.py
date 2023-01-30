@@ -157,16 +157,16 @@ class Generator:
                 print("\nUnsuccessfully added " + str(usr_input) + " movies to filters")
                 print("Returning back to filters...")
             else:
-                print("\nInvalid input")
+                print("\nInvalid entry")
                 print("Returning back to filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
             self.browse_filters()
-        elif usr_input == "3":
+        elif usr_input == "0":
             print("Goodbye!")
             exit()
         else:
-            print("Invalid input - please select from an available genre")
+            print("Invalid entry - please select from an available genre")
             self.show_movies("s")
 
         self.browse_filters()
@@ -254,7 +254,7 @@ class Generator:
                 print("\nUnsuccessfully removed " + str(usr_input) + " movies from generator")
                 print("Returning back to filters...")
             else:
-                print("\nInvalid input")
+                print("\nInvalid entry")
                 print("Returning back to filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
@@ -263,7 +263,7 @@ class Generator:
             print("Goodbye!")
             exit()
         else:
-            print("Invalid input - please select from an available genre")
+            print("Invalid entry - please select from an available genre")
             self.show_movies("d")
 
         self.browse_filters()
@@ -289,7 +289,30 @@ class Generator:
     def time_options(self, usr_input):
         if usr_input == "1":
             self.show_time()
+        elif usr_input in self.times:
+            print("Are you sure you want to generate movies with a maximum duration of " + str(usr_input) + " minutes?")
+            confirm = input("Y/N: ")
+            if confirm.lower() == "y":
+                print("\nSuccessfully added movie duration of max " + str(usr_input) + " minutes to filters!")  
+                print("Returning back to filters...")
+            elif confirm.lower() == "n":
+                print("\nUnsucessfully added movie duration of max " + str(usr_input) + " minutes to filters")
+                print("Returning back to filters...")
+            else: 
+                print("\nInvalid input")
+                print("Returning back to filters...")
+        elif usr_input == "2":
+            print("Returning back to filters...")
+            self.browse_filters()
+        elif usr_input == "0":
+            print("Goodbye!")
+            exit()
+        else:
+            print("Invalid input - please select from an available time")
+            self.show_time()
         
+        self.browse_filters()
+
 
     def show_time(self):
         table = Table(show_header=False, header_style="bold magenta")
@@ -322,6 +345,7 @@ class Generator:
             print("Goodbye!")
         else:
             print("Invalid entry - returning to time select...")
+            self.time()
         
 
 if __name__ == "__main__":
