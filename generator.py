@@ -6,6 +6,7 @@ class Generator:
         self.user_input = None
         self.filters = []
         self.genres = ["action", "adventure","animation","biography","comedy","crime", "documentary", "drama", "family", "fantasy",  "history", "horror", "musical", "mystery", "romance", "sciFi", "sport","thriller", "war", "western"]
+        self.times = ["60", "90", "120", "150", "180"]
 
         self.welcome_message()
 
@@ -102,8 +103,8 @@ class Generator:
             self.gs()
         elif usr_input == "-gd" or usr_input == "--genre-d":
             self.gd()
-        elif usr_input == "-time" or usr_input == "--time":
-            pass
+        elif usr_input == "-t" or usr_input == "--time":
+            self.time()
         elif usr_input == "-r" or usr_input == "--rated":
             pass
         elif usr_input == "-d" or usr_input == "--decade":
@@ -266,6 +267,62 @@ class Generator:
             self.show_movies("d")
 
         self.browse_filters()
+
+    def time(self):
+        print("")
+        print(
+            boxen(
+                "[green]Enter the maximum movie duration",
+                "",
+                "[blue]Press 1 to see a list of acceptable times",
+                "[dark_orange3]Press 2 to go back",
+                "[bright_red]Press 0 to exit",
+                title="-t: Time Select",
+                color="white",
+                padding=1,
+            )
+        )
+
+        self.user_input = input("Enter here: ")
+        self.time_options(self.user_input)
+        
+    def time_options(self, usr_input):
+        if usr_input == "1":
+            self.show_time()
+        
+
+    def show_time(self):
+        table = Table(show_header=False, header_style="bold magenta")
+
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_row(
+            "60", "90", "120", "150", "180"
+        )
+
+        print("")
+
+        print(
+            boxen(
+                "Movie Time Durations in Minutes",
+                "",
+                "[dark_orange3]Enter 1 to go back and enter a time  [/dark_orange3]",
+                "[bright_red]Enter 0 to exit[/bright_red]",
+                table
+            )
+        )
+
+        self.user_input = input("Enter here: ")
+        if self.user_input == "1":
+            self.time()
+        elif self.user_input == "0":
+            print("Goodbye!")
+        else:
+            print("Invalid entry - returning to time select...")
+        
 
 if __name__ == "__main__":
     Generator()
