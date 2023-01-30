@@ -7,6 +7,7 @@ class Generator:
         self.filters = []
         self.genres = ["action", "adventure","animation","biography","comedy","crime", "documentary", "drama", "family", "fantasy",  "history", "horror", "musical", "mystery", "romance", "sciFi", "sport","thriller", "war", "western"]
         self.times = ["60", "90", "120", "150", "180"]
+        self.ratings = ["G", "PG", "PG13", "R", 'NC17']
 
         self.welcome_message()
 
@@ -106,7 +107,7 @@ class Generator:
         elif usr_input == "-t" or usr_input == "--time":
             self.time()
         elif usr_input == "-r" or usr_input == "--rated":
-            pass
+            self.rated()
         elif usr_input == "-d" or usr_input == "--decade":
             pass
         elif usr_input == "-s" or usr_input == "--snob":
@@ -347,6 +348,85 @@ class Generator:
             print("Invalid entry - returning to time select...")
             self.time()
         
+    def rated(self):
+        print("")
+        print(
+            boxen(
+                "[green]Enter a movie rating category to NOT generate from ",
+                "",
+                "[blue]Press 1 to see a list of ratings",
+                "[dark_orange3]Press 2 to go back",
+                "[bright_red]Press 0 to exit",
+                title="-r: Rated Deselect",
+                color="white",
+                padding=1,
+            )
+        )
+
+        self.user_input = input("Enter here: ")
+        self.r_options(self.user_input)
+
+    def r_options(self, usr_input):
+        if usr_input == "1":
+            self.show_ratings()
+        elif usr_input.upper() in self.ratings:
+            print("Are you sure you want to exclude movies with a " + str(usr_input.upper()) + " rating?")
+            confirm = input("Y/N: ")
+            if confirm.lower() == "y":
+                print("\nSuccessfully removed " + str(usr_input.upper()) + " movies from generator")
+                print("Returning back to filters...")
+            elif confirm.lower() == "n":
+                print("\nUnsuccessfully removed " + str(usr_input.upper()) + " movies from generator")
+                print("Returning back to filters...")
+            else:
+                print("\nInvalid entry")
+                print("Returning back to filters...")
+        elif usr_input == "2":
+            print("Returning back to filters...")
+            self.browse_filters()
+        elif usr_input == "0":
+            print("Goodbye!")
+            exit()
+        else:
+            print("Invalid entry - please select from an available rating")
+            self.show_ratings()
+
+        self.browse_filters()
+    
+    def show_ratings(self):
+        table = Table(show_header=False, header_style="bold magenta")
+
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_column
+        table.add_row(
+            "G", "PG", "PG13", "R", "NC17"
+        )
+
+        print("")
+
+        print(
+            boxen(
+                "Movie Ratings",
+                "",
+                "[dark_orange3]Enter 1 to go back and enter a rating  [/dark_orange3]",
+                "[bright_red]Enter 0 to exit[/bright_red]",
+                table
+            )
+        )
+
+        self.user_input = input("Enter here: ")
+        if self.user_input == "1":
+            self.rated()
+        elif self.user_input == "0":
+            print("Goodbye!")
+        else:
+            print("Invalid entry - returning to rating select...")
+            self.rated()
+        
+
 
 if __name__ == "__main__":
     Generator()
