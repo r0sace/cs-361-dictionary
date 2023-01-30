@@ -112,7 +112,7 @@ class Generator:
         elif usr_input == "-d" or usr_input == "--decade":
             self.decade()
         elif usr_input == "-s" or usr_input == "--snob":
-            pass
+            self.snob()
         elif usr_input == "-n" or usr_input == "--num":
             pass
         elif usr_input == "1":
@@ -132,9 +132,9 @@ class Generator:
             boxen(
                 "[green]Enter a movie genre to generate from",
                 "",
-                "[blue]Press 1 to see a list of movie genres",
-                "[dark_orange3]Press 2 to go back",
-                "[bright_red]Press 0 to exit",
+                "[blue]Enter 1 to see a list of movie genres",
+                "[dark_orange3]Enter 2 to go back",
+                "[bright_red]Enter 0 to exit",
                 title="-gs: Genre Select",
                 color="white",
                 padding=1,
@@ -163,12 +163,11 @@ class Generator:
                 print("Returning back to filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
-            self.browse_filters()
         elif usr_input == "0":
             print("Goodbye!")
             exit()
         else:
-            print("Invalid entry - please select from an acceptabl genre")
+            print("\nInvalid entry - please select from an acceptabl genre")
             self.show_movies("s")
 
         self.browse_filters()
@@ -229,9 +228,9 @@ class Generator:
             boxen(
                 "[green]Enter a movie genre to NOT generate from",
                 "",
-                "[blue]Press 1 to see a list of movie genres",
-                "[dark_orange3]Press 2 to go back",
-                "[bright_red]Press 0 to exit",
+                "[blue]Enter 1 to see a list of movie genres",
+                "[dark_orange3]Enter 2 to go back",
+                "[bright_red]Enter 0 to exit",
                 title="-gd: Genre Deselect",
                 color="white",
                 padding=1,
@@ -260,12 +259,11 @@ class Generator:
                 print("Returning back to filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
-            self.browse_filters()
         elif usr_input == "0":
             print("Goodbye!")
             exit()
         else:
-            print("Invalid entry - please select from an acceptable genre")
+            print("\nInvalid entry - please select from an acceptable genre")
             self.show_movies("d")
 
         self.browse_filters()
@@ -276,9 +274,9 @@ class Generator:
             boxen(
                 "[green]Enter the maximum movie duration",
                 "",
-                "[blue]Press 1 to see a list of acceptable times",
-                "[dark_orange3]Press 2 to go back",
-                "[bright_red]Press 0 to exit",
+                "[blue]Enter 1 to see a list of acceptable times",
+                "[dark_orange3]Enter 2 to go back",
+                "[bright_red]Enter 0 to exit",
                 title="-t: Time Select",
                 color="white",
                 padding=1,
@@ -305,12 +303,11 @@ class Generator:
                 print("Returning back to filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
-            self.browse_filters()
         elif usr_input == "0":
             print("Goodbye!")
             exit()
         else:
-            print("Invalid input - please select from an acceptable time")
+            print("\nInvalid input - please select from an acceptable time")
             self.show_time()
         
         self.browse_filters()
@@ -355,9 +352,9 @@ class Generator:
             boxen(
                 "[green]Enter a movie rating category to NOT generate from ",
                 "",
-                "[blue]Press 1 to see a list of acceptable ratings",
-                "[dark_orange3]Press 2 to go back",
-                "[bright_red]Press 0 to exit",
+                "[blue]Enter 1 to see a list of acceptable ratings",
+                "[dark_orange3]Enter 2 to go back",
+                "[bright_red]Enter 0 to exit",
                 title="-r: Rated Deselect",
                 color="white",
                 padding=1,
@@ -384,12 +381,11 @@ class Generator:
                 print("Returning back to filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
-            self.browse_filters()
         elif usr_input == "0":
             print("Goodbye!")
             exit()
         else:
-            print("Invalid entry - please select from an acceptable rating")
+            print("\nInvalid entry - please select from an acceptable rating")
             self.show_ratings()
 
         self.browse_filters()
@@ -433,9 +429,9 @@ class Generator:
             boxen(
                 "[green]Enter a decade to generate from",
                 "",
-                "[blue]Press 1 to see a list of acceptable decades",
-                "[dark_orange3]Press 2 to go back",
-                "[bright_red]Press 0 to exit",
+                "[blue]Enter 1 to see a list of acceptable decades",
+                "[dark_orange3]Enter 2 to go back",
+                "[bright_red]Enter 0 to exit",
                 title="-d: Decade Select",
                 color="white",
                 padding=1,
@@ -462,12 +458,11 @@ class Generator:
                 print("Returning back to filters...")
         elif usr_input == "2":
             print("Returning back to filters...")
-            self.browse_filters()
         elif usr_input == "0":
             print("Goodbye!")
             exit()
         else:
-            print("Invalid input - please select from an acceptable decade")
+            print("\nInvalid input - please select from an acceptable decade")
             self.show_decades()
         
         self.browse_filters()
@@ -514,7 +509,47 @@ class Generator:
             print("Invalid entry - returning to time select...")
             self.decade()
 
-    
+    def snob(self):
+        print("")
+        print(
+            boxen(
+                "[green]Generate movies with 3.5 stars or higher",
+                "",
+                "[blue]Enter 1 to activate snob mode",
+                "[dark_orange3]Enter 2 to go back",
+                "[bright_red]Enter 0 to exit",
+                title="-s: Snob Toggle",
+                color="white",
+                padding=1,
+            )
+        )
+
+        self.user_input = input("Enter here: ")
+        self.snob_options(self.user_input)
+
+    def snob_options(self, usr_input):
+        if usr_input == "1":
+            print("Are you sure you want to only generate movies with 3.5 stars or higher?")
+            confirm = input("Y/N: ")
+            if confirm.lower() == "y":
+                print("\nSuccesfully turned on snob mode")
+                print("Returning back to filters...")
+            elif confirm.lower() == "n":
+                print("\nUnsuccessfully turned on snob mode")
+                print("Returning back to filters...")
+            else:
+                print("\nInvalid entry")
+                print("Returning back to filters...")
+        elif usr_input == "2":
+            print("Returning back to filters...")
+        elif usr_input == "0":
+            print("Goodbye!")
+            exit()
+        else:
+            print("\nInvalid entry - returning back to filters")
+
+        self.browse_filters()
+
 
 
 if __name__ == "__main__":
