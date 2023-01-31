@@ -687,7 +687,7 @@ class Generator:
         self.movies_input(self.user_input)
 
     def movies_input(self, usr_input):
-        if usr_input.lower() == "A":
+        if usr_input.upper() == "A":
             print(
                 boxen(
                     "The story is a tale of redemption for paroled convict Jake and his blood",
