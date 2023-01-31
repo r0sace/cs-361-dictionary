@@ -48,7 +48,7 @@ class Generator:
 
         table = Table(show_header=True, header_style="bold magenta")
 
-        table.add_column("Option Code")
+        table.add_column("Filter Code")
         table.add_column("Description", justify="left")
         table.add_row(
             "-gs     --genre-s", "Select a movie genre", 
@@ -84,7 +84,7 @@ class Generator:
             boxen(
                 "Optional Filters",
                 "",
-                "[green]Enter an option code to alter the generator[/green]",
+                "[green]Enter a filter code to alter the generator for your specific movie needs[/green]",
                 "",
                 "[blue]Enter 1 to see current applied filters[/blue]",
                 "[dark_orange3]Enter 2 to go back[/dark_orange3]",
@@ -720,6 +720,7 @@ class Generator:
             self.welcome_message()
         else:
             print("Invalid entry - returning home")
-            self.welcome_message()      
+            self.welcome_message()    
+
 if __name__ == "__main__":
     Generator()
