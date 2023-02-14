@@ -1,12 +1,12 @@
 # cs-361-random-movie-generator
 
-Communication Contract:<br>
+Communication Contract<br><br>
 A) Requesting Data from the Microservice
   - The microservice will be inside of random_word function which receives no arguments inside of the main (client) code.
   - A user will be prompted if they would like to generate a random word, if so, the random_word function will be called.
   - Once the function is called, the microservice connection will be established and the client will send "Generating random word..." to server.
   
-  Example:<br>
+  Example:<br><br>
   -User selects that they would like a random word.<br>
   -random_word() is called.<br>
   -Server prints "Generating random word..."<br>
