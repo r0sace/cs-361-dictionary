@@ -1,4 +1,4 @@
-# cs-361-random-movie-generator
+# cs-361-dictionary
 
 Communication Contract<br><br>
 A) Requesting Data from the Microservice
