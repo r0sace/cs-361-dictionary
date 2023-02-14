@@ -6,10 +6,10 @@ A) Requesting Data from the Microservice
   - A user will be prompted if they would like to generate a random word, if so, the random_word function will be called.
   - Once the function is called, the microservice connection will be established and the client will send "Generating random word..." to server.
   
-  Example:
-    User selects that they would like a random word.<br>
-    random_word() is called.<br>
-    Server prints "Generating random word..."<br>
+  Example:<br>
+      User selects that they would like a random word.<br>
+      random_word() is called.<br>
+      Server prints "Generating random word..."<br>
     
   B) Retrieving Data from the Microservice
   - The server will then print the message it received from the client and begin generating a random word using a GET request to WordsAPI with
