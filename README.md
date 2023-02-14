@@ -18,4 +18,4 @@ Communication Contract for Partner's Microservice<br><br>
   
 
    
-<img width="992" alt="Screenshot 2023-02-13 at 10 35 49 PM" src="https://user-images.githubusercontent.com/91238002/218633242-b3c537bd-d0e3-4d8d-bc62-1ecf9f0a7948.png">
+![image](https://user-images.githubusercontent.com/91238002/218877463-cda4a178-35fb-4c86-87a6-3dd4398a87bf.png)
