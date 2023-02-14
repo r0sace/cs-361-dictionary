@@ -19,4 +19,4 @@ A) Requesting Data from the Microservice
   
 
    
-![alt text] (https://tinypic.host/i/screenshot-2023-02-13-at-103549-pm.1dzig)
+<img width="992" alt="Screenshot 2023-02-13 at 10 35 49 PM" src="https://user-images.githubusercontent.com/91238002/218633242-b3c537bd-d0e3-4d8d-bc62-1ecf9f0a7948.png">
