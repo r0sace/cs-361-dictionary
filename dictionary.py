@@ -5,7 +5,6 @@ from random import random
 from clint.textui import progress
 import pyfiglet
 from colorama import Fore, Back, Style
-from pyboxen import boxen
 import zmq
 import requests
 
@@ -136,7 +135,7 @@ class Dictionary:
         if action == "Yes":
             choices = ["Example", "Synonyms", "Antonyms", "Pronunciation", "New search", "Exit"]
         else:
-            if self.current_result_idx <= self.num_definitions:
+            if self.current_result_idx < self.num_definitions:
                 choices = ["Different definition", "New search", "Exit"]
             else:
                 choices = ["New search", "Exit"]
@@ -215,7 +214,7 @@ class Dictionary:
     
     def get_synonyms(self):
          word_info = self.word_details[self.current_result_idx]
-         
+
 
 
 
