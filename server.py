@@ -1,18 +1,32 @@
 import zmq
-import time
-from password_strength import PasswordStats
+import requests
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
+print("Waiting to request...")
 
 while True:
-    message = socket.recv()
-    password = message.decode()
-    print("Generating password strength for \"" + password + "\"...")
+    socket.recv()
+    print('Fetching a random word...\n')
+    url = "https://wordsapiv1.p.rapidapi.com/words/"
 
-    stats = PasswordStats(password)
-    strength_int = round(stats.strength() * 100)
-    strength_string = str(strength_int)
+    headers = {
+        "X-RapidAPI-Key": "035af51e50msh68d685ccdc16360p1b9a49jsn767069945ef4",
+        "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com"
+    }
 
-    socket.send_string("The password strength for \"" +  password + "\" is " + strength_string + " out of 99.")
+    querystring = {"random": "true"}
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    result = response.json()
+    print(result["word"])
+
+    while "results" not in result:
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        result = response.json()
+        print(result["word"])
+
+    parse_word = result["word"]
+    print(f'Random word is {parse_word}.')
+    socket.send_string(parse_word)
+    print('Random word sent to client...\n')
