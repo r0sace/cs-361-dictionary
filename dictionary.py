@@ -10,6 +10,7 @@ import requests
 
 class Dictionary:
     def __init__(self):
+        """Initializes the dictionary object."""
         self.word = None
         self.word_details = None
         self.definition = None
@@ -22,13 +23,14 @@ class Dictionary:
         self.part_of_speech = None
 
         self.headers =  {
-        "X-RapidAPI-Key": "x",
+        "X-RapidAPI-Key": "035af51e50msh68d685ccdc16360p1b9a49jsn767069945ef4",
 	    "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com"
         }
         
         self.welcome()
 
     def welcome(self):
+        """Displays a welcome banner and displays information about the program to the user"""
         print("")
         title_art = pyfiglet.figlet_format("Dictionary", font="roman")
         print(title_art)
@@ -43,6 +45,7 @@ class Dictionary:
         action = self.main_menu_actions()
     
     def main_menu_actions(self):
+        """Displays main menu selection to users and gets users selected input."""
         action = inquirer.select(
             message="Select an action:",
             choices = ["Search word", "Get random word", "Exit"],
@@ -50,6 +53,7 @@ class Dictionary:
         self.main_menu_selections(action)
 
     def main_menu_selections(self, action):
+        """Receives users main menu selection and calls corresponding function."""
         if action == "Search word":
             self.search_word()
         elif action == "Get random word":
@@ -58,6 +62,7 @@ class Dictionary:
             pass
 
     def progress_bar(self, action):
+        """Loads a dummy progress bar for users."""
         print("")
         print(Fore.GREEN, action)
         for i in progress.bar(range(10)):
@@ -66,6 +71,7 @@ class Dictionary:
         return
     
     def client(self):
+        """Partner's microservice client code - connects program to server."""
         context = zmq.Context()
 
         socket = context.socket(zmq.REQ)
@@ -78,6 +84,7 @@ class Dictionary:
 
 
     def get_random_word(self):
+        """Retrieves a random word from WordsAPI."""
         self.progress_bar("Getting random word...")
         self.current_result_idx = 0
         self.word = str(self.client())
@@ -85,6 +92,7 @@ class Dictionary:
 
 
     def get_random_word_details(self):
+        """Retrieves details about random word from WordsAPI and stores word's details."""
         url = "https://wordsapiv1.p.rapidapi.com/words/" + self.word
         response = requests.request("GET", url, headers=self.headers)
         word_details = response.json()
@@ -95,6 +103,7 @@ class Dictionary:
         self.get_definition()
 
     def get_searched_word_details(self):
+        """Searches for a word in the WordsAPI and stores word's details."""
         url = "https://wordsapiv1.p.rapidapi.com/words/" + self.word
         response = requests.request("GET", url, headers=self.headers)
         word_details = response.json()
@@ -115,6 +124,7 @@ class Dictionary:
         self.get_definition()
 
     def get_definition(self):
+        """Retrieves the definition and part of speech from word details then stores accordingly."""
         word_info = self.word_details[self.current_result_idx]
         self.definition = word_info["definition"]
         if word_info["partOfSpeech"] is None:
@@ -124,12 +134,14 @@ class Dictionary:
         self.word_definition_display()
 
     def search_word(self):
+        """Prompts users to search for a word and collects users input."""
         self.word = inquirer.text(message="Enter a word:").execute()
         self.progress_bar("Getting word...")
         self.current_result_idx = 0
         self.get_searched_word_details()
     
     def word_definition_display(self):
+        """Displays the definition and part of speech of a word."""
         print(Fore.BLUE + self.word + Style.RESET_ALL)
         print("| " + Style.DIM +  self.part_of_speech + Style.RESET_ALL)
         print("| " + self.definition)
@@ -137,6 +149,7 @@ class Dictionary:
         self.definition_check()
 
     def definition_check(self):
+        """Asks the user if the definition given is correct for their usage. Sets up menu options accordingly."""
         action = inquirer.select(
             message="Is this the definition you're looking for?",
             choices = ["Yes", "No"]
@@ -151,6 +164,7 @@ class Dictionary:
         self.word_info_actions(action, choices)
     
     def word_info_actions(self, action, choices):
+        """Display different actions to users depending on correctness of definition fetched. Fetches selection."""
         print("")
         if action == "Yes":
             while True:
@@ -171,6 +185,7 @@ class Dictionary:
 
     
     def word_info_selection(self, action, choices):
+        """Receives user's selected action and calls corresponding function."""
         if action == "Example":
             self.progress_bar("Getting example...")
             self.get_example()
@@ -198,6 +213,7 @@ class Dictionary:
             self.goodbye()
 
     def get_example(self):
+        """Retrieves and stores example."""
         word_info = self.word_details[self.current_result_idx]
         if "examples" in word_info:
             self.examples = word_info["examples"]
@@ -207,6 +223,7 @@ class Dictionary:
         return
 
     def display_example(self, choices):
+        "Displays example."
         print("")
         print(Fore.BLUE + self.word + Style.RESET_ALL)
 
@@ -224,6 +241,7 @@ class Dictionary:
         return
     
     def get_synonyms(self):
+        """Retrieves and stores synonyms."""
         word_info = self.word_details[self.current_result_idx]
         if "synonyms" in word_info:
              self.synonyms = word_info["synonyms"]
@@ -233,6 +251,7 @@ class Dictionary:
     
          
     def display_synonyms(self, choices):
+        """Displays synonyms."""
         print("")
         print(Fore.BLUE + self.word + Style.RESET_ALL)
 
@@ -249,6 +268,7 @@ class Dictionary:
         return
     
     def get_antonyms(self):
+        """Retrieves and stores antonyms"""
         word_info = self.word_details[self.current_result_idx]
         if "antonyms" in word_info:
              self.antonyms = word_info["antonyms"]
@@ -258,6 +278,7 @@ class Dictionary:
         return
     
     def display_antonyms(self, choices):
+        "Displays antonyms."
         print("")
         print(Fore.BLUE + self.word + Style.RESET_ALL)
 
@@ -274,10 +295,12 @@ class Dictionary:
         return
     
     def get_pronunciation(self):
+        "Retrieves and stores pronunciation."
         if self.pronunciation is None:
             self.pronunciation = ["Sorry, no available pronunciation for this word."]
     
     def display_pronunciation(self, choices):
+        "Displays pronunciation."
         print("")
         print(Fore.BLUE + self.word + Style.RESET_ALL)
         if len(self.pronunciation) > 1:     
@@ -293,6 +316,7 @@ class Dictionary:
         
              
     def goodbye(self):
+        "Prints a goodbye message and exits."
         print("")
         exit_art = pyfiglet.figlet_format("Goodbye", font="roman")
         print(exit_art)
