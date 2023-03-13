@@ -14,12 +14,15 @@ class Dictionary:
         self.word_details = None
         self.definition = None
         self.examples = None
+        self.synonyms = None
+        self.antonyms = None
+        self.pronunciation = None
         self.current_result_idx = 0
         self.num_definitions = None
-        self.part_of_speech = "\x1B[3mnoun\x1B[0m"
+        self.part_of_speech = None
 
         self.headers =  {
-        "X-RapidAPI-Key": "035af51e50msh68d685ccdc16360p1b9a49jsn767069945ef4",
+        "X-RapidAPI-Key": "x",
 	    "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com"
         }
         
@@ -29,10 +32,13 @@ class Dictionary:
         print("")
         title_art = pyfiglet.figlet_format("Dictionary", font="roman")
         print(title_art)
-        print("** Welcome to the Dictionary tool created by Cristina Rosace")
-        print("** Use this tool to explore the English language!")
-        print("** Use your arrow keys to get started")
+        print(Fore.GREEN + "** Welcome to the Dictionary tool created by Cristina Rosace" + Style.RESET_ALL)
         print("")
+        print("** Use this tool to explore the English language!")
+        print("** Simply view definitions or get detailed information about words.")
+        print("** Use your" + Fore.MAGENTA + " arrow keys " + Style.RESET_ALL + "to get started!")
+        print("")
+        Style.RESET_ALL
 
         action = self.main_menu_actions()
     
@@ -85,6 +91,7 @@ class Dictionary:
     
         self.word_details = word_details["results"]
         self.num_definitions = len(self.word_details) - 1
+        self.pronunciation = word_details["pronunciation"]
         self.get_definition()
 
     def get_searched_word_details(self):
@@ -98,6 +105,8 @@ class Dictionary:
         
         self.word_details = word_details["results"]
         self.num_definitions = len(self.word_details) - 1
+
+        self.pronunciation = word_details["pronunciation"]
 
         if self.num_definitions < 0:
             print(Fore.RED + 'Error: "' + self.word +  '" not found in the dictionary. \n' + Style.RESET_ALL)
@@ -133,15 +142,14 @@ class Dictionary:
             choices = ["Yes", "No"]
         ).execute()
         if action == "Yes":
-            choices = ["Example", "Synonyms", "Antonyms", "Pronunciation", "New search", "Exit"]
+            choices = ["Example: View in a sentence", "Synonyms:", "Antonyms", "Pronunciation", "New search", "Exit"]
         else:
             if self.current_result_idx < self.num_definitions:
                 choices = ["Different definition", "New search", "Exit"]
             else:
                 choices = ["New search", "Exit"]
         self.word_info_actions(action, choices)
-
-
+    
     def word_info_actions(self, action, choices):
         print("")
         if action == "Yes":
@@ -169,13 +177,16 @@ class Dictionary:
             self.display_example(choices)
         elif action == "Synonyms":
             self.progress_bar("Getting synonyms...")
-            self.synonyms(choices)
+            self.get_synonyms()
+            self.display_synonyms(choices)
         elif action == "Antonyms":
             self.progress_bar("Getting antonyms...")
-            self.antonyms(choices)
+            self.get_antonyms()
+            self.display_antonyms(choices)
         elif action == "Pronunciation":
             self.progress_bar("Getting pronunciation...")
-            self.pronunciation(choices)
+            self.get_pronunciation()
+            self.display_pronunciation(choices)
         elif action == "Different definition":
             self.current_result_idx += 1
             self.progress_bar("Getting another definition...")
@@ -191,7 +202,7 @@ class Dictionary:
         if "examples" in word_info:
             self.examples = word_info["examples"]
         else:
-            self.examples = ["Sorry no available examples of this word."]
+            self.examples = ["Sorry, no available examples for this word."]
         
         return
 
@@ -213,55 +224,80 @@ class Dictionary:
         return
     
     def get_synonyms(self):
-         word_info = self.word_details[self.current_result_idx]
-
-
-
-
-    def synonyms(self, choices):
+        word_info = self.word_details[self.current_result_idx]
+        if "synonyms" in word_info:
+             self.synonyms = word_info["synonyms"]
+        else:
+            self.synonyms = ["Sorry, no available synonyms for this definition."]
+        return
+    
+         
+    def display_synonyms(self, choices):
         print("")
-        synonyms = ["hi", "how-do-you-do", "howdy", "hullo"]
         print(Fore.BLUE + self.word + Style.RESET_ALL)
-        print("| " + Style.DIM +  "synonyms" + Style.RESET_ALL)
-        print("| ", end="")
-        print(*synonyms, sep=", ")
+
+        if len(self.synonyms) > 1:
+            print("|" + Style.DIM + " synonyms" + Style.RESET_ALL)
+        else:
+            print("|" + Style.DIM + " synonym" + Style.RESET_ALL)
+
+        for synonym in self.synonyms:
+            print("| \u2022 " + synonym)
+        
         print("")
         choices.remove("Synonyms")
         return
     
-    def antonyms(self, choices):
+    def get_antonyms(self):
+        word_info = self.word_details[self.current_result_idx]
+        if "antonyms" in word_info:
+             self.antonyms = word_info["antonyms"]
+        else:
+            self.antonyms=["Sorry, no available antonyms for this definition."]
+        
+        return
+    
+    def display_antonyms(self, choices):
         print("")
-        antonyms = ["adios", "au revoir", "goodbye"]
         print(Fore.BLUE + self.word + Style.RESET_ALL)
-        print("| " + Style.DIM +  "antonyms" + Style.RESET_ALL)
-        print("| ", end="")
-        print(*antonyms, sep=", ")
+
+        if len(self.antonyms) > 1:
+            print("|" + Style.DIM +  " antonyms" + Style.RESET_ALL)
+        else:
+            print("|" + Style.DIM + " antonym" + Style.RESET_ALL)
+
+        for antonym in self.antonyms:
+            print("| \u2022 " + antonym)
+
         print("")
         choices.remove("Antonyms")
         return
     
-    def pronunciation(self, choices):
+    def get_pronunciation(self):
+        if self.pronunciation is None:
+            self.pronunciation = ["Sorry, no available pronunciation for this word."]
+    
+    def display_pronunciation(self, choices):
         print("")
-        pronuncation = "hɛ'loʊ"
         print(Fore.BLUE + self.word + Style.RESET_ALL)
-        print("| " + Style.DIM +  "pronunciation" + Style.RESET_ALL)
-        print("| " + pronuncation)
+        if len(self.pronunciation) > 1:     
+            print("|" + Style.DIM +  " pronunciations" + Style.RESET_ALL)
+        else:
+            print("|" + Style.DIM + " pronunciation" + Style.RESET_ALL)
+        
+        for key in self.pronunciation:
+            print("| \u2022 " + self.pronunciation[key])
+        
         print("")
         choices.remove("Pronunciation")
-        return      
-    
-
+        
+             
     def goodbye(self):
+        print("")
         exit_art = pyfiglet.figlet_format("Goodbye", font="roman")
         print(exit_art)
         exit()
 
-
-
-
-
-
-        
 
 if __name__ == "__main__":
     Dictionary()
